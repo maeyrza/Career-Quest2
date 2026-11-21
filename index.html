@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,9 +49,31 @@ footer{background:var(--navy);color:white;text-align:center;padding:20px;line-he
 <a href="#kuis">Kuis Minat</a>
 <a href="#misi">Misi</a>
 </nav>
+
+<div class="auth-actions">
+  <a href="#login-siswa">Login Siswa</a>
+  <a href="#login-admin">Login Admin</a>
+</div>
+
 </header>
 
 <main>
+<section id="login-siswa">
+  <h2>🎓 Login Siswa</h2>
+  <input type="text" id="nama-siswa" placeholder="Nama lengkap">
+  <input type="text" id="kelas-siswa" placeholder="Kelas">
+  <input type="email" id="email-siswa" placeholder="Email">
+  <input type="password" id="password-siswa" placeholder="Password">
+  <button type="button" id="btn-login-siswa">Masuk sebagai Siswa</button>
+  <button type="button" id="btn-daftar-siswa">Daftar Siswa</button>
+</section>
+
+<section id="login-admin">
+  <h2>🛡️ Login Admin</h2>
+  <input type="email" id="email-admin" placeholder="Email Admin">
+  <input type="password" id="password-admin" placeholder="Password Admin">
+  <button type="button" id="btn-login-admin">Masuk sebagai Admin</button>
+</section>
 <div class="hero" id="beranda">
 <h1>Jelajahi Karier Masa Depanmu!</h1>
 <p>Kenali potensi, minat, dan bakatmu melalui petualangan seru Career Quest. Temukan bidang pekerjaan yang sesuai dengan dirimu!</p>
@@ -242,5 +265,109 @@ function selesai(tombol){
  }
 }
 </script>
+  
+<script>
+</script>
+
+<script>
+const supabaseClient = window.supabase.createClient(
+  'https://iurwqhgbfoprkrlpkjpy.supabase.co',
+  'sb_publishable_k8aJ1gMMgD_IkgVygV6rAw_EL4Om1LK'
+);
+</script>
+
+<script>
+// PENDAFTARAN SISWA
+document.getElementById('btn-daftar-siswa').addEventListener('click', async function () {
+  const nama = document.getElementById('nama-siswa').value.trim();
+  const kelas = document.getElementById('kelas-siswa').value.trim();
+  const email = document.getElementById('email-siswa').value.trim();
+  const password = document.getElementById('password-siswa').value;
+
+  if (!nama || !kelas || !email || !password) {
+    alert('Mohon lengkapi semua data siswa.');
+    return;
+  }
+
+  const { error } = await supabaseClient.auth.signUp({
+    email,
+    password,
+    options: {
+      data: { nama, kelas }
+    }
+  });
+
+  if (error) {
+    alert(error.message);
+  } else {
+    alert('Pendaftaran berhasil. Cek email jika diminta konfirmasi.');
+  }
+});
+
+// LOGIN SISWA
+document.getElementById('btn-login-siswa').addEventListener('click', async function () {
+  const email = document.getElementById('email-siswa').value.trim();
+  const password = document.getElementById('password-siswa').value;
+
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  const { data: profil, error: profilError } = await supabaseClient
+    .from('profiles')
+    .select('nama, kelas, role')
+    .eq('id', data.user.id)
+    .single();
+
+  if (profilError || profil.role !== 'siswa') {
+    await supabaseClient.auth.signOut();
+    alert('Akun ini bukan akun siswa.');
+    return;
+  }
+
+  alert('Selamat datang, ' + (profil.nama || 'Siswa') + '!');
+});
+
+// LOGIN ADMIN
+document.getElementById('btn-login-admin').addEventListener('click', async function () {
+  const email = document.getElementById('email-admin').value.trim();
+  const password = document.getElementById('password-admin').value;
+
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  const { data: profil, error: profilError } = await supabaseClient
+    .from('profiles')
+    .select('nama, role')
+    .eq('id', data.user.id)
+    .single();
+
+  if (profilError || profil.role !== 'admin') {
+    await supabaseClient.auth.signOut();
+    alert('Akun ini bukan akun admin.');
+    return;
+  }
+
+  alert('Login admin berhasil. Selamat datang!');
+});
+</script>
+
+</body>
+</html>
+</script>
+
 </body>
 </html>
