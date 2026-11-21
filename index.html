@@ -148,6 +148,13 @@ footer{background:var(--navy);color:white;text-align:center;padding:20px;line-he
 <div class="card"><h3>Misi 3</h3><p>Tuliskan cita-cita dan langkah untuk mencapainya.</p><button onclick="selesai(this)">Selesaikan Misi</button></div>
 </div>
 <p id="progres" aria-live="polite">Misi selesai: 0 dari 3</p>
+  <div id="refleksi" style="display:none; text-align:center; margin:20px;">
+  <h3>🎉 Misi Selesai!</h3>
+  <p>Selamat! Kamu sudah menyelesaikan seluruh misi eksplorasi karier.</p>
+  <a href="https://forms.gle/UEC3XPWA7Mc8SGWL7" target="_blank" rel="noopener">
+    <button type="button">Isi Refleksi Perjalanan Karier</button>
+  </a>
+</div>
 </section>
 </main>
 <footer>
@@ -228,6 +235,10 @@ function selesai(tombol){
   tombol.textContent="✓ Selesai";
   jumlah++;
   document.getElementById("progres").textContent="Misi selesai: "+jumlah+" dari 3";
+
+  if(jumlah===3){
+   document.getElementById("refleksi").style.display="block";
+  }
  }
 }
 </script>
