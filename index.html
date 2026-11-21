@@ -298,7 +298,7 @@ document.getElementById('btn-daftar-siswa').addEventListener('click', async func
   });
 
   if (error) {
-    alert(error.message);
+    alert('Pesan pendaftaran: ' + error.message);
   } else {
     alert('Pendaftaran berhasil. Cek email jika diminta konfirmasi.');
   }
