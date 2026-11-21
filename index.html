@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Career Quest - Jelajah Karier</title>
+<style>
+:root{--navy:#263f78;--blue:#496bc0;--ink:#263452;--bg:#f5f7ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--navy);color:white;padding:20px 7%;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+header h2{margin:0}
+nav{display:flex;gap:16px;flex-wrap:wrap}
+nav a{color:white;text-decoration:none;font-size:14px}
+nav a:hover{text-decoration:underline}
+.hero{text-align:center;padding:65px 20px;background:linear-gradient(135deg,#dce8ff,#f4e9ff)}
+.hero h1{font-size:clamp(28px,5vw,42px);color:#29477f;margin-top:0}
+.hero p{line-height:1.7;max-width:650px;margin:15px auto 24px}
+button{background:var(--blue);color:white;border:0;padding:11px 18px;border-radius:9px;cursor:pointer;font-size:14px}
+button:hover{background:#29477f}
+button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #f2b84b;outline-offset:3px}
+section{padding:38px 7%;text-align:center}
+section>p{line-height:1.6}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;margin-top:25px}
+.card{background:white;padding:22px;border-radius:14px;box-shadow:0 3px 12px #00000010}
+.profession-card{display:flex;flex-direction:column;align-items:center;gap:10px}
+.profession-card .emoji{font-size:42px}
+.profession-card h3{color:#34549a;margin:2px 0}
+.profession-card p{line-height:1.5;min-height:44px}
+.profession-card button{margin-top:auto}
+.detail{display:none;text-align:left;max-width:850px;margin:24px auto 0;border:1px solid #dce5fa}
+.detail h3{color:#34549a;margin-top:0}
+.detail p{line-height:1.65}
+.detail-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+#hasil{font-weight:bold;color:#29477f;margin-top:15px;line-height:1.6}
+select{max-width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;background:white}
+footer{background:var(--navy);color:white;text-align:center;padding:20px;line-height:1.5}
+@media(max-width:600px){header{justify-content:center;text-align:center}nav{justify-content:center}.hero{padding:48px 18px}section{padding:30px 18px}}
+</style>
+</head>
+<body>
+<header>
+<h2>🎯 Career Quest</h2>
+<nav aria-label="Navigasi utama">
+<a href="#beranda">Beranda</a>
+<a href="#profesi">Profesi</a>
+<a href="#kuis">Kuis Minat</a>
+<a href="#misi">Misi</a>
+</nav>
+</header>
+
+<main>
+<div class="hero" id="beranda">
+<h1>Jelajahi Karier Masa Depanmu!</h1>
+<p>Kenali potensi, minat, dan bakatmu melalui petualangan seru Career Quest. Temukan bidang pekerjaan yang sesuai dengan dirimu!</p>
+<button onclick="document.getElementById('profesi').scrollIntoView({behavior:'smooth'})">Mulai Petualangan</button>
+</div>
+
+<section id="profesi">
+<h2>🧭 Kenali Berbagai Profesi</h2>
+<p>Pilih kartu atau tekan tombol <b>Lihat Detail</b> untuk mengenal pekerjaan, tugas, keterampilan, dan pendidikan yang dapat ditempuh.</p>
+<div class="cards">
+<article class="card profession-card">
+<div class="emoji">👩‍⚕️</div><h3>Dokter</h3><p>Membantu menjaga kesehatan dan merawat pasien.</p>
+<button onclick="detailProfesi('Dokter')">Lihat Detail</button></article>
+<article class="card profession-card">
+<div class="emoji">👨‍🏫</div><h3>Guru</h3><p>Mendidik dan membimbing peserta didik.</p>
+<button onclick="detailProfesi('Guru')">Lihat Detail</button></article>
+<article class="card profession-card">
+<div class="emoji">💻</div><h3>Programmer</h3><p>Mengembangkan perangkat lunak dan aplikasi.</p>
+<button onclick="detailProfesi('Programmer')">Lihat Detail</button></article>
+<article class="card profession-card">
+<div class="emoji">🎨</div><h3>Desainer</h3><p>Membuat karya visual dan komunikasi desain.</p>
+<button onclick="detailProfesi('Desainer')">Lihat Detail</button></article>
+<article class="card profession-card">
+<div class="emoji">⚖️</div><h3>Pengacara</h3><p>Memberikan bantuan dan pendampingan hukum.</p>
+<button onclick="detailProfesi('Pengacara')">Lihat Detail</button></article>
+<article class="card profession-card">
+<div class="emoji">📊</div><h3>Wirausahawan</h3><p>Membangun dan mengelola sebuah usaha.</p>
+<button onclick="detailProfesi('Wirausahawan')">Lihat Detail</button></article>
+</div>
+
+<div id="detailProfesi" class="card detail" aria-live="polite">
+<h3 id="namaProfesi">Detail Profesi</h3>
+<p><b>Gambaran pekerjaan:</b> <span id="deskripsi"></span></p>
+<p><b>Tugas dan tanggung jawab:</b> <span id="tugas"></span></p>
+<p><b>Keterampilan yang dibutuhkan:</b> <span id="skill"></span></p>
+<p><b>Pendidikan atau jalur persiapan:</b> <span id="pendidikan"></span></p>
+<div class="detail-actions">
+<button onclick="tutupDetail()">Tutup Detail</button>
+</div>
+</div>
+</section>
+
+<section id="kuis">
+<h2>✨ Kuis Minat Karier</h2>
+<p>Pilih kegiatan yang paling kamu sukai untuk mengenali bidang yang mungkin menarik bagimu.</p>
+<div class="card">
+<select id="minat" aria-label="Pilih minat karier">
+<option value="">-- Pilih minatmu --</option>
+<option value="sosial">Membantu dan berinteraksi dengan orang lain</option>
+<option value="teknologi">Menggunakan komputer dan teknologi</option>
+<option value="seni">Menggambar dan membuat karya kreatif</option>
+<option value="bisnis">Berbisnis dan mengelola usaha</option>
+<option value="analisis">Meneliti dan memecahkan masalah</option>
+</select><br><br>
+<button onclick="cekMinat()">Lihat Hasil</button>
+<p id="hasil" aria-live="polite"></p>
+</div>
+</section>
+
+<section id="misi">
+<h2>🏆 Misi Eksplorasi Karier</h2>
+<p>Selesaikan tantangan sederhana untuk mulai mengeksplorasi dirimu.</p>
+<div class="cards">
+<div class="card"><h3>Misi 1</h3><p>Kenali tiga kelebihan yang kamu miliki.</p><button onclick="selesai(this)">Selesaikan Misi</button></div>
+<div class="card"><h3>Misi 2</h3><p>Pilih satu profesi yang menarik bagimu.</p><button onclick="selesai(this)">Selesaikan Misi</button></div>
+<div class="card"><h3>Misi 3</h3><p>Tuliskan cita-cita dan langkah untuk mencapainya.</p><button onclick="selesai(this)">Selesaikan Misi</button></div>
+</div>
+<p id="progres" aria-live="polite">Misi selesai: 0 dari 3</p>
+</section>
+</main>
+<footer>
+<p>© 2026 Career Quest | Jelajah Karier dengan Misi</p>
+<p>Media Bimbingan dan Konseling</p>
+</footer>
+
+<script>
+const dataProfesi = {
+"Dokter": {
+deskripsi:"Tenaga profesional yang membantu menjaga, memelihara, dan memulihkan kesehatan pasien.",
+tugas:"Memeriksa kondisi pasien, menegakkan diagnosis, memberikan penanganan, dan menyarankan pencegahan penyakit.",
+skill:"Empati, komunikasi, ketelitian, kemampuan mengambil keputusan, dan kemauan belajar.",
+pendidikan:"Menempuh pendidikan kedokteran, pendidikan profesi dokter, serta memenuhi ketentuan perizinan profesi."
+},
+"Guru": {
+deskripsi:"Pendidik profesional yang membantu peserta didik mengembangkan pengetahuan, keterampilan, dan karakter.",
+tugas:"Merencanakan pembelajaran, mengajar, membimbing, menilai perkembangan, dan melakukan refleksi pembelajaran.",
+skill:"Komunikasi, kesabaran, kreativitas, pengelolaan kelas, dan kemampuan menjelaskan.",
+pendidikan:"Menempuh pendidikan tinggi yang relevan dan memenuhi kualifikasi pendidik sesuai ketentuan."
+},
+"Programmer": {
+deskripsi:"Profesional yang merancang, menulis, menguji, dan memelihara kode untuk perangkat lunak atau aplikasi.",
+tugas:"Menganalisis kebutuhan, menulis kode, menguji program, memperbaiki kesalahan, dan bekerja sama dalam tim.",
+skill:"Logika, pemecahan masalah, ketelitian, kolaborasi, dan kemampuan belajar teknologi baru.",
+pendidikan:"Dapat melalui pendidikan informatika atau ilmu komputer, kursus, pelatihan, dan portofolio proyek."
+},
+"Desainer": {
+deskripsi:"Profesional kreatif yang menyampaikan pesan atau memecahkan kebutuhan komunikasi melalui karya visual.",
+tugas:"Menggali kebutuhan, membuat konsep, menyusun rancangan visual, menerima masukan, dan menyempurnakan desain.",
+skill:"Kreativitas, komunikasi visual, kepekaan estetika, ketelitian, dan penguasaan perangkat desain.",
+pendidikan:"Dapat melalui pendidikan desain atau bidang terkait, pelatihan, dan pengembangan portofolio."
+},
+"Pengacara": {
+deskripsi:"Advokat adalah profesi yang memberikan jasa hukum kepada klien sesuai peraturan yang berlaku.",
+tugas:"Memberikan konsultasi hukum, menyusun dokumen hukum, serta mendampingi atau mewakili klien sesuai kewenangan.",
+skill:"Berpikir kritis, komunikasi, argumentasi, riset, integritas, dan ketelitian.",
+pendidikan:"Menempuh pendidikan tinggi hukum dan memenuhi persyaratan profesi advokat sesuai ketentuan."
+},
+"Wirausahawan": {
+deskripsi:"Seseorang yang merintis atau mengembangkan usaha dengan mengelola peluang dan risiko.",
+tugas:"Mengenali kebutuhan pasar, merencanakan produk atau jasa, mengelola keuangan, pemasaran, dan operasional.",
+skill:"Kreativitas, komunikasi, kepemimpinan, perencanaan, adaptasi, dan pengelolaan keuangan.",
+pendidikan:"Dapat melalui pendidikan formal, pelatihan kewirausahaan, pengalaman, dan praktik mengelola usaha."
+}
+};
+
+function detailProfesi(nama){
+ const p=dataProfesi[nama];
+ if(!p) return;
+ document.getElementById("namaProfesi").textContent=nama;
+ document.getElementById("deskripsi").textContent=p.deskripsi;
+ document.getElementById("tugas").textContent=p.tugas;
+ document.getElementById("skill").textContent=p.skill;
+ document.getElementById("pendidikan").textContent=p.pendidikan;
+ const panel=document.getElementById("detailProfesi");
+ panel.style.display="block";
+ panel.scrollIntoView({behavior:"smooth",block:"center"});
+}
+function tutupDetail(){
+ document.getElementById("detailProfesi").style.display="none";
+}
+function cekMinat(){
+ const nilai=document.getElementById("minat").value;
+ const hasil={
+ sosial:"Bidang sosial: misalnya pendidikan, kesehatan, konseling, dan pelayanan masyarakat.",
+ teknologi:"Bidang teknologi: misalnya programmer, teknisi, dan pengembang aplikasi.",
+ seni:"Bidang kreatif: misalnya desainer, ilustrator, dan pekerja seni.",
+ bisnis:"Bidang bisnis: misalnya wirausahawan, pemasaran, dan pengelolaan usaha.",
+ analisis:"Bidang analisis: misalnya peneliti, analis data, dan ilmuwan."
+ };
+ document.getElementById("hasil").textContent=hasil[nilai]||"Silakan pilih minat terlebih dahulu.";
+}
+let jumlah=0;
+function selesai(tombol){
+ if(!tombol.disabled){
+  tombol.disabled=true;
+  tombol.textContent="✓ Selesai";
+  jumlah++;
+  document.getElementById("progres").textContent="Misi selesai: "+jumlah+" dari 3";
+ }
+}
+</script>
+</body>
+</html>
