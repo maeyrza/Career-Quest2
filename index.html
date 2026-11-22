@@ -70,8 +70,8 @@ footer{background:var(--navy);color:white;text-align:center;padding:20px;line-he
 
 <section id="login-admin">
   <h2>🛡️ Login Admin</h2>
- <input type="email" id="email-daftar-admin" placeholder="Email Admin">
- <input type="password" id="password-daftar-admin" placeholder="Password Admin">
+ <input type="email" id="email-admin" placeholder="Email Admin">
+ <input type="password" id="password-admin" placeholder="Password Admin">
   <button type="button" id="btn-login-admin">Masuk sebagai Admin</button>
 </section>
 <div class="hero" id="beranda">
@@ -318,8 +318,8 @@ document.getElementById('btn-daftar-siswa').addEventListener('click', async func
 
 // LOGIN SISWA
 document.getElementById('btn-login-siswa').addEventListener('click', async function () {
- const email = document.getElementById('email-login-siswa').value.trim();
-const password = document.getElementById('password-login-siswa').value;
+const email = document.getElementById('email-siswa').value.trim();
+const password = document.getElementById('password-siswa').value;
 
   const { data, error } = await supabaseClient.auth.signInWithPassword({
     email,
