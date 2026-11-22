@@ -181,29 +181,6 @@ footer{background:var(--navy);color:white;text-align:center;padding:20px;line-he
 </section>
 </main>
   
-<section id="login" style="background:#eaf0ff;padding:40px 7%;">
-  <h2>🔐 Login Career Quest</h2>
-  <p>Silakan pilih jenis akun untuk masuk.</p>
-
-  <div style="display:flex;justify-content:center;gap:15px;flex-wrap:wrap;">
-    <button onclick="tampilLogin('siswa')">🎓 Login Siswa</button>
-    <button onclick="tampilLogin('admin')">👩‍💻 Login Admin</button>
-  </div>
-
-  <div id="form-siswa" style="display:none;max-width:400px;margin:25px auto;background:white;padding:25px;border-radius:14px;">
-  <h3>Login Siswa</h3>
-  <input id="email-login-siswa" type="email" placeholder="Email siswa" style="width:100%;padding:12px;margin:8px 0;">
-  <input id="password-login-siswa" type="password" placeholder="Password" style="width:100%;padding:12px;margin:8px 0;">
-  <button id="btn-login-siswa">Masuk sebagai Siswa</button>
-</div>
-
-  <div id="form-admin" style="display:none;max-width:400px;margin:25px auto;background:white;padding:25px;border-radius:14px;">
-    <h3>Login Admin</h3>
-    <input id="email-admin" type="email" placeholder="Email admin" style="width:100%;padding:12px;margin:8px 0;">
-    <input id="password-admin" type="password" placeholder="Password" style="width:100%;padding:12px;margin:8px 0;">
-    <button id="btn-login-admin">Masuk sebagai Admin</button>
-  </div>
-</section>
 
 <script>
 function tampilLogin(jenis) {
