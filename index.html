@@ -74,11 +74,39 @@ footer{background:var(--navy);color:white;text-align:center;padding:20px;line-he
  <input type="password" id="password-admin" placeholder="Password Admin">
   <button type="button" id="btn-login-admin">Masuk sebagai Admin</button>
 </section>
+
 <div class="hero" id="beranda">
-<h1>Jelajahi Karier Masa Depanmu!</h1>
-<p>Kenali potensi, minat, dan bakatmu melalui petualangan seru Career Quest. Temukan bidang pekerjaan yang sesuai dengan dirimu!</p>
-<button onclick="document.getElementById('profesi').scrollIntoView({behavior:'smooth'})">Mulai Petualangan</button>
+  <h1>Jelajahi Karier Masa Depanmu!</h1>
+
+  <p>
+    Kenali potensi, minat, dan bakatmu melalui petualangan
+    seru Career Quest. Temukan bidang pekerjaan yang sesuai
+    dengan dirimu!
+  </p>
+
+  <h3>Silakan Pilih Jenis Login</h3>
+
+  <div class="pilihan-login">
+
+    <button onclick="tampilLogin('siswa')">
+      Login Siswa
+    </button>
+
+    <button onclick="tampilLogin('admin')">
+      Login Admin
+    </button>
+
+    <button onclick="tampilLogin('guru_bk')">
+      Login Guru BK
+    </button>
+
+  </div>
+
+  <button onclick="document.getElementById('profesi').scrollIntoView({behavior:'smooth'})">
+    Mulai Petualangan
+  </button>
 </div>
+
 
 <section id="petunjuk">
   <h2>📖 Petunjuk Penggunaan Career Quest</h2>
