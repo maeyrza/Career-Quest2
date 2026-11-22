@@ -233,7 +233,14 @@ footer{background:var(--navy);color:white;text-align:center;padding:20px;line-he
 <script>
 
 
+
 function tampilLogin(jenis) {
+  const idLogin = {
+    siswa: 'login-siswa',
+    admin: 'login-admin',
+    guru_bk: 'login-guru-bk'
+  };
+
   const daftarLogin = [
     'login-siswa',
     'login-admin',
@@ -245,10 +252,11 @@ function tampilLogin(jenis) {
 
     if (bagian) {
       bagian.style.display =
-        id === 'login-' + jenis ? 'block' : 'none';
+        id === idLogin[jenis] ? 'block' : 'none';
     }
   });
 }
+
 
 
 <footer>
