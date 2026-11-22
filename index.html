@@ -371,8 +371,8 @@ const password = document.getElementById('password-login-siswa').value;
 
 // LOGIN ADMIN
 document.getElementById('btn-login-admin').addEventListener('click', async function () {
-const email = document.getElementById('email-daftar-admin').value.trim();
-const password = document.getElementById('password-daftar-admin').value;
+const email = document.getElementById('email-admin').value.trim();
+const password = document.getElementById('password-admin').value;
 
   const { data, error } = await supabaseClient.auth.signInWithPassword({
     email,
