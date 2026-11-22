@@ -64,7 +64,7 @@ footer{background:var(--navy);color:white;text-align:center;padding:20px;line-he
   <input type="text" id="kelas-siswa" placeholder="Kelas">
   <input type="email" id="email-siswa" placeholder="Email">
   <input type="password" id="password-siswa" placeholder="Password">
-  <button type="button" id="btn-login-siswa">Masuk sebagai Siswa</button>
+  <button type="button" id="">Masuk sebagai Siswa</button>
   <button type="button" id="btn-daftar-siswa">Daftar Siswa</button>
 </section>
 
@@ -73,6 +73,26 @@ footer{background:var(--navy);color:white;text-align:center;padding:20px;line-he
  <input type="email" id="email-admin" placeholder="Email Admin">
  <input type="password" id="password-admin" placeholder="Password Admin">
   <button type="button" id="btn-login-admin">Masuk sebagai Admin</button>
+</section>
+
+<section id="login-guru-bk" style="display:none;">
+  <h2>👩‍🏫 Login Guru BK</h2>
+
+  <input
+    type="email"
+    id="email-guru-bk"
+    placeholder="Email Guru BK"
+  >
+
+  <input
+    type="password"
+    id="password-guru-bk"
+    placeholder="Password Guru BK"
+  >
+
+  <button type="button" id="btn-login-guru-bk">
+    Masuk sebagai Guru BK
+  </button>
 </section>
 
 <div class="hero" id="beranda">
@@ -211,14 +231,25 @@ footer{background:var(--navy);color:white;text-align:center;padding:20px;line-he
   
 
 <script>
-function tampilLogin(jenis) {
-  document.getElementById('form-siswa').style.display =
-    jenis === 'siswa' ? 'block' : 'none';
 
-  document.getElementById('form-admin').style.display =
-    jenis === 'admin' ? 'block' : 'none';
+
+function tampilLogin(jenis) {
+  const daftarLogin = [
+    'login-siswa',
+    'login-admin',
+    'login-guru-bk'
+  ];
+
+  daftarLogin.forEach(function(id) {
+    const bagian = document.getElementById(id);
+
+    if (bagian) {
+      bagian.style.display =
+        id === 'login-' + jenis ? 'block' : 'none';
+    }
+  });
 }
-</script>
+
 
 <footer>
 <p>© 2026 Career Quest | Jelajah Karier dengan Misi</p>
@@ -374,10 +405,9 @@ const password = document.getElementById('password-siswa').value;
   alert('Selamat datang, ' + (profil.nama || 'Siswa') + '!');
 });
 
-// LOGIN ADMIN
-document.getElementById('btn-login-admin').addEventListener('click', async function () {
-const email = document.getElementById('email-admin').value.trim();
-const password = document.getElementById('password-admin').value;
+document.getElementById('btn-login-guru-bk').addEventListener('click', async function () {
+  const email = document.getElementById('email-guru-bk').value.trim();
+  const password = document.getElementById('password-guru-bk').value;
 
   const { data, error } = await supabaseClient.auth.signInWithPassword({
     email,
@@ -388,6 +418,36 @@ const password = document.getElementById('password-admin').value;
     alert(error.message);
     return;
   }
+
+  const { data: profil, error: profilError } = await supabaseClient
+    .from('profiles')
+    .select('nama, role')
+    .eq('id', data.user.id)
+    .single();
+
+  if (profilError || !profil || profil.role !== 'guru_bk') {
+    await supabaseClient.auth.signOut();
+    alert('Akun ini bukan akun Guru BK.');
+    return;
+  }
+
+  alert('Selamat datang, ' + (profil.nama || 'Guru BK') + '!');
+});
+
+// LOGIN ADMIN
+document.getElementById('btn-login-admin').addEventListener('click', async function () {
+const email = document.getElementById('email-admin').value.trim();
+const password = document.getElementById('password-admin').value;
+
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+    email,
+    password
+  });
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
 
   const { data: profil, error: profilError } = await supabaseClient
     .from('profiles')
