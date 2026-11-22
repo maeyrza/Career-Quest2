@@ -70,8 +70,8 @@ footer{background:var(--navy);color:white;text-align:center;padding:20px;line-he
 
 <section id="login-admin">
   <h2>🛡️ Login Admin</h2>
-  <input type="email" id="email-admin" placeholder="Email Admin">
-  <input type="password" id="password-admin" placeholder="Password Admin">
+ <input type="email" id="email-daftar-admin" placeholder="Email Admin">
+ <input type="password" id="password-daftar-admin" placeholder="Password Admin">
   <button type="button" id="btn-login-admin">Masuk sebagai Admin</button>
 </section>
 <div class="hero" id="beranda">
@@ -180,6 +180,41 @@ footer{background:var(--navy);color:white;text-align:center;padding:20px;line-he
 </div>
 </section>
 </main>
+  
+<section id="login" style="background:#eaf0ff;padding:40px 7%;">
+  <h2>🔐 Login Career Quest</h2>
+  <p>Silakan pilih jenis akun untuk masuk.</p>
+
+  <div style="display:flex;justify-content:center;gap:15px;flex-wrap:wrap;">
+    <button onclick="tampilLogin('siswa')">🎓 Login Siswa</button>
+    <button onclick="tampilLogin('admin')">👩‍💻 Login Admin</button>
+  </div>
+
+  <div id="form-siswa" style="display:none;max-width:400px;margin:25px auto;background:white;padding:25px;border-radius:14px;">
+  <h3>Login Siswa</h3>
+  <input id="email-login-siswa" type="email" placeholder="Email siswa" style="width:100%;padding:12px;margin:8px 0;">
+  <input id="password-login-siswa" type="password" placeholder="Password" style="width:100%;padding:12px;margin:8px 0;">
+  <button id="btn-login-siswa">Masuk sebagai Siswa</button>
+</div>
+
+  <div id="form-admin" style="display:none;max-width:400px;margin:25px auto;background:white;padding:25px;border-radius:14px;">
+    <h3>Login Admin</h3>
+    <input id="email-admin" type="email" placeholder="Email admin" style="width:100%;padding:12px;margin:8px 0;">
+    <input id="password-admin" type="password" placeholder="Password" style="width:100%;padding:12px;margin:8px 0;">
+    <button id="btn-login-admin">Masuk sebagai Admin</button>
+  </div>
+</section>
+
+<script>
+function tampilLogin(jenis) {
+  document.getElementById('form-siswa').style.display =
+    jenis === 'siswa' ? 'block' : 'none';
+
+  document.getElementById('form-admin').style.display =
+    jenis === 'admin' ? 'block' : 'none';
+}
+</script>
+
 <footer>
 <p>© 2026 Career Quest | Jelajah Karier dengan Misi</p>
 <p>Media Bimbingan dan Konseling</p>
@@ -306,8 +341,8 @@ document.getElementById('btn-daftar-siswa').addEventListener('click', async func
 
 // LOGIN SISWA
 document.getElementById('btn-login-siswa').addEventListener('click', async function () {
-  const email = document.getElementById('email-siswa').value.trim();
-  const password = document.getElementById('password-siswa').value;
+ const email = document.getElementById('email-login-siswa').value.trim();
+const password = document.getElementById('password-login-siswa').value;
 
   const { data, error } = await supabaseClient.auth.signInWithPassword({
     email,
@@ -325,7 +360,7 @@ document.getElementById('btn-login-siswa').addEventListener('click', async funct
     .eq('id', data.user.id)
     .single();
 
-  if (profilError || profil.role !== 'siswa') {
+  if (profilError || !profil || profil.role !== 'siswa') {
     await supabaseClient.auth.signOut();
     alert('Akun ini bukan akun siswa.');
     return;
@@ -336,8 +371,8 @@ document.getElementById('btn-login-siswa').addEventListener('click', async funct
 
 // LOGIN ADMIN
 document.getElementById('btn-login-admin').addEventListener('click', async function () {
-  const email = document.getElementById('email-admin').value.trim();
-  const password = document.getElementById('password-admin').value;
+const email = document.getElementById('email-daftar-admin').value.trim();
+const password = document.getElementById('password-daftar-admin').value;
 
   const { data, error } = await supabaseClient.auth.signInWithPassword({
     email,
@@ -355,7 +390,7 @@ document.getElementById('btn-login-admin').addEventListener('click', async funct
     .eq('id', data.user.id)
     .single();
 
-  if (profilError || profil.role !== 'admin') {
+ if (profilError || !profil || profil.role !== 'admin') {
     await supabaseClient.auth.signOut();
     alert('Akun ini bukan akun admin.');
     return;
@@ -367,7 +402,4 @@ document.getElementById('btn-login-admin').addEventListener('click', async funct
 
 </body>
 </html>
-</script>
 
-</body>
-</html>
